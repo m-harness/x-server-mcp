@@ -187,7 +187,7 @@ export class Logger {
 ```typescript
 export interface Config {
   apiKey: string;           // 必須: XSERVER_API_KEY
-  defaultServerName?: string; // 任意: XSERVER_SERVER_NAME
+  defaultServerName?: string; // 実質必須: XSERVER_SERVER_NAME（未設定時は毎回ツール引数で指定が必要）
   logLevel: LogLevel;       // デフォルト: 'info'
   logDir: string;           // デフォルト: './logs'
 }

@@ -3,9 +3,7 @@
 Xserver の REST API を MCP (Model Context Protocol) サーバーとして利用するためのプロジェクトです。  
 Xserver の API キーを使って、サーバー情報取得、Cron、WordPress、メール、DNS、SSL などを MCP ツールとして操作できます。
 
-## 公開向けファイル構成
-
-GitHub に公開する前提では、次の構成がそのまま分かりやすく安全です。
+## ファイル構成
 
 ```text
 x-server-mcp/
@@ -23,9 +21,6 @@ x-server-mcp/
     ├── design/
     └── x-server-api/
 ```
-
-ローカル専用ファイルや内部メモは `.gitignore` で除外しています。  
-公開しない対象の例は `.env*`、`logs/`、`coverage/`、`dist/`、`.claude/`、`AGENTS.md`、`CLAUDE.md`、`memo.md`、`api-docs.md` です。
 
 ## 必要環境
 
@@ -56,7 +51,7 @@ API キーをソースコードへ直書きしたり、Git 管理下の設定フ
 | 環境変数 | 必須 | 説明 |
 |---------|------|------|
 | `XSERVER_API_KEY` | 必須 | Xserver で発行した API キー |
-| `XSERVER_SERVER_NAME` | 任意 | デフォルトで利用するサーバー名 |
+| `XSERVER_SERVER_NAME` | 実質必須 | デフォルトで利用するサーバー名。未設定の場合、各ツール呼び出し時に毎回 `servername` 引数を指定する必要がある |
 | `LOG_LEVEL` | 任意 | `debug` / `info` / `warn` / `error` |
 | `LOG_DIR` | 任意 | ログ出力先ディレクトリ |
 
@@ -68,7 +63,7 @@ API キーをソースコードへ直書きしたり、Git 管理下の設定フ
 XSERVER_SERVER_NAME=xs123456.xsrv.jp
 ```
 
-これは必須ではありませんが、複数サーバーを扱う場合や、毎回 `servername` を指定したくない場合に便利です。
+未設定の場合、各ツール呼び出し時に毎回 `servername` 引数を指定する必要があります。通常は設定しておくことを推奨します。
 
 ### どこに認証情報を書くべきか
 
@@ -138,7 +133,9 @@ npm start
 3. Claude Desktop の `mcpServers` に `xserver` を登録する
 4. `env` に `XSERVER_API_KEY` を設定する
 5. Claude Desktop を再起動する
-6. `apikey-info` や `server-info` を呼んで疎通確認する
+6. `server-info` を呼んで疎通確認する
+
+> **注意**: `apikey-info` は API キーの情報が LLM に渡されるため、疎通確認には `server-info` の使用を推奨します。
 
 ## ドキュメント
 
@@ -149,8 +146,3 @@ npm start
 - [テスト方針と要約](./docs/testing.md)
 - [実装タスク記録](./docs/tasks.md)
 - [Xserver API 仕様メモ](./docs/x-server-api/index.md)
-
-## 補足
-
-- `package.json` の `"private": true` は GitHub 公開の妨げにはなりません
-- npm 公開まで行う場合だけ、ライセンス表記や `private` 設定の見直しを検討してください
