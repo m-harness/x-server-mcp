@@ -1,26 +1,34 @@
+# Dependencies / build outputs
 node_modules/
 dist/
-logs/
-
-.env
-.env.*
-!.env.example
-
-*.db
-*.db-shm
-*.db-wal
-
 coverage/
+logs/
 tmp/
 temp/
 *.log
 
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Local databases
+*.db
+*.db-shm
+*.db-wal
+
+# OS / editor
 .DS_Store
 Thumbs.db
+.idea/
+.vscode/
 
+# Local notes / agent files
 memo.md
+api-docs.md
+AGENTS.md
+CLAUDE.md
 .claude/
 
+# Local development workspace
 dev/
-
-CLAUDE.md
